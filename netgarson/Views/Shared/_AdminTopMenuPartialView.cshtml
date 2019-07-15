@@ -1,0 +1,82 @@
+﻿
+<div class="sidebar-toggle-box">
+    <i class="fa fa-bars"></i>
+</div>
+<!--logo start-->
+<a href="index.html" class="logo">Flat<span>lab</span></a>
+<!--logo end-->
+<div class="nav notify-row" id="top_menu">
+    <!--  notification start -->
+    <ul class="nav top-menu">
+
+        <li class="dropdown li-scanNotification" style="display:none">
+            <a data-toggle="dropdown" class="dropdown-toggle a-scanNotification" href="#" onclick="getScanNotificationList()">
+                <i class="fa fa-qrcode"></i>
+                <span class="badge badge-terques span-scanNotificationCount"></span>
+            </a>
+            <ul class="dropdown-menu extended notification ul-scanNotificationReference">
+
+            </ul>
+        </li>
+
+        <li class="dropdown li-callNotification" style="display:none">
+            <a data-toggle="dropdown" class="dropdown-toggle a-callNotification" href="#" onclick="getCallNotificationList()">
+                <i class="fa fa-bell-o"></i>
+                <span class="badge badge-danger span-callNotificationCount"></span>
+            </a>
+            <ul class="dropdown-menu extended notification ul-callNotificationReference">
+
+            </ul>
+        </li>
+
+        <li class="dropdown li-cafeCommentNotification" style="display:none">
+            <a data-toggle="dropdown" class="dropdown-toggle a-cafeCommentNotification" href="#" onclick="getCafeCommentNotificationList()">
+                <i class="fa fa-comment"></i>
+                <span class="badge badge-yellow span-cafeCommentNotificationCount"></span>
+            </a>
+            <ul class="dropdown-menu extended notification ul-cafeCommetNotificationReference">
+
+            </ul>
+        </li>
+
+        <li class="dropdown li-menuCommentNotification" style="display:none">
+            <a data-toggle="dropdown" class="dropdown-toggle a-menuCommentNotification" href="#" onclick="getMenuCommentNotificationList()">
+                <i class="fa fa-comment-o"></i>
+                <span class="badge badge-blue span-menuCommentNotificationCount"></span>
+            </a>
+            <ul class="dropdown-menu extended notification ul-menuCommetNotificationReference">
+
+            </ul>
+        </li>
+
+        <!-- settings start -->
+        <!-- settings end -->
+        <!-- inbox dropdown start-->
+        <!-- inbox dropdown end -->
+        <!-- notification dropdown start-->
+        <!-- notification dropdown end -->
+    </ul>
+    <!--  notification end -->
+</div>
+<div class="top-nav ">
+    <!--search & user info start-->
+    <ul class="nav pull-right top-menu">
+        <!-- user login dropdown start-->
+        <li class="dropdown">
+            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                <img alt="" src="img/avatar1_small.jpg">
+                <span class="username">Jhon Doue</span>
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu extended logout dropdown-menu-right">
+                <div class="log-arrow-up"></div>
+                <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li>
+                <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
+                <li><a href="#"><i class="fa fa-bell-o"></i> Notification</a></li>
+                <li><a id="a-logout"><i class="fa fa-key"></i> Log Out</a></li>
+            </ul>
+        </li>
+        <!-- user login dropdown end -->
+    </ul>
+    <!--search & user info end-->
+</div>

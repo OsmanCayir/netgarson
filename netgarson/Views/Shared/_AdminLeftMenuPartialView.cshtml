@@ -1,0 +1,85 @@
+﻿<div id="sidebar" class="nav-collapse ">
+    <!-- sidebar menu start-->
+    <ul class="sidebar-menu" id="nav-accordion">
+        <li>
+            <a class="active" href="@Url.Action("Index","Admin")">
+                <i class="fa fa-dashboard"></i>
+                <span>Dashboard</span>
+            </a>
+        </li>
+
+        <li class="sub-menu">
+            <a href="javascript:;">
+                <i class="fa fa-coffee"></i>
+                <span>Menü İşlemleri</span>
+            </a>
+            <ul class="sub">
+                <li>
+                    <a href="@Url.Action("MenuList","Admin")">Menü Listesi</a>
+                </li>
+                <li><a href="@Url.Action("NewMenu","Admin")">Yeni Menü</a></li>
+            </ul>
+        </li>
+
+        <li class="sub-menu">
+            <a href="javascript:;">
+                <i class="fa fa-bars"></i>
+                <span>Kategori İşlemleri</span>
+            </a>
+            <ul class="sub">
+                <li><a href="@Url.Action("CategoryList","Admin")">Kategori Listesi</a></li>
+                <li><a href="@Url.Action("NewCategory","Admin")">Yeni Kategori</a></li>
+            </ul>
+        </li>
+
+        <li class="sub-menu">
+            <a href="javascript:;">
+                <i class="fa fa-comment"></i>
+                <span>Cafe Yorumları</span>
+            </a>
+            <ul class="sub">
+                <li><a href="@Url.Action("CafeCommentList","Admin")">Cafe Yorumları Listesi</a></li>
+                <li><a href="@Url.Action("NewCafeComment","Admin")">Yeni Cafe Yorumu</a></li>
+            </ul>
+        </li>
+
+        <li class="sub-menu">
+            <a href="javascript:;">
+                <i class="fa fa-comment-o"></i>
+                <span>Menü Yorumları</span>
+            </a>
+            <ul class="sub">
+                <li><a href="@Url.Action("MenuCommentList","Admin")">Menü Yorumları Listesi</a></li>
+                <li><a href="@Url.Action("NewMenuComment","Admin")">Yeni Menü Yorumui</a></li>
+            </ul>
+        </li>
+
+        <li class="sub-menu">
+            <a href="javascript:;">
+                <i class="fa fa-qrcode"></i>
+                <span>Qr Kod işlemleri</span>
+            </a>
+            <ul class="sub">
+                <li><a href="@Url.Action("QrCodeList","Admin")">Qr Kod Listesi</a></li>
+                <li><a href="@Url.Action("NewQrCode","Admin")">Yeni Qr Kod</a></li>
+            </ul>
+        </li>
+
+        <li>
+            <a href="@Url.Action("CallList","Admin")">
+                <i class="fa fa-bell-o"></i>
+                <span>Çağırma Listesi</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="@Url.Action("ScanList","Admin")">
+                <i class="fa fa-qrcode"></i>
+                <span>Tarama Listesi</span>
+            </a>
+        </li>
+
+
+    </ul>
+    <!-- sidebar menu end-->
+</div>

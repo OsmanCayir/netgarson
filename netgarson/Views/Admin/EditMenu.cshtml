@@ -1,0 +1,282 @@
+﻿@model Tuple<netgarson.Entities.Menu, List<netgarson.Entities.Category>, List<netgarson.Entities.CategoryMenuRel>>
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<section id="container">
+    <!--header start-->
+    <header class="header white-bg">
+        @Html.Partial("~/Views/Shared/_AdminTopMenuPartialView.cshtml")
+    </header>
+    <!--header end-->
+    <!--sidebar start-->
+    <aside>
+        @Html.Partial("~/Views/Shared/_AdminLeftMenuPartialView.cshtml")
+    </aside>
+    <!--sidebar end-->
+    <!--main content start-->
+    <section id="main-content">
+        <section class="wrapper">
+            @*<div class="div-alert">
+                    <div class="alert alert-success div-alertSuccess" role="alert" style="display:none">
+                    </div>
+                    <div class="alert alert-danger div-alertDanger" role="alert" style="display:none">
+                    </div>
+                </div>*@
+
+            <!-- page start-->
+            <div class="row">
+                <div class="col-lg-12">
+                    <section class="card">
+                        <header class="card-header">
+                            Yeni Menu
+                            <button id="button-update" class="btn btn-primary btn-sm" type="button" style="float:right"><i class="fa fa-save"></i> Kaydet</button>
+                        </header>
+                        <div class="card-body">
+                            <form class="form-horizontal tasi-form" method="get">
+                                <input id="input-ID" type="hidden" class="form-control" value="@Model.Item1.ID">
+
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-sm-2 control-label">Categori</label>
+                                    <div class="col-sm-10">
+                                        <select id="select-categoryMenuRelList" class="js-example-basic-multiple" multiple="multiple">
+                                            @foreach (var category in Model.Item2)
+                                            {
+                                                if ((Model.Item3.Where(m => m.Category_ID == category.ID).ToList()).Count > 0)
+                                                {
+                                                    <option value="@category.ID" selected>@category.Name</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@category.ID">@category.Name</option>
+                                                }
+
+                                            }
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-sm-2 control-label">Ad</label>
+                                    <div class="col-sm-10">
+                                        <input id="input-name" type="text" class="form-control" value="@Model.Item1.Name">
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-sm-2 control-label">Açıklama</label>
+                                    <div class="col-sm-10">
+                                        <textarea id="textarea-description" class="form-control">@Model.Item1.Description</textarea>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-sm-2 control-label">Fiyat</label>
+                                    <div class="col-sm-10">
+
+                                        <div class="form-group row">
+
+                                            <div class="my-colspan" style="width:135px">
+
+                                                <div class="input-group mb-3">
+                                                    <input id="input-priceTL" type="text" class="form-control" maxlength="4" style="text-align:right" value="@Math.Truncate(Model.Item1.Price)" onkeypress="validateNumber(event)">
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text">TL</span>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                            <div class="my-colspan" style="width:135px">
+
+                                                <div class="input-group mb-3">
+
+                                                    @{
+                                                        string priceKRText = "";
+                                                        if ((Model.Item1.Price - Math.Truncate(Model.Item1.Price)).ToString().Length == 4)
+                                                        {
+                                                            priceKRText = ((Model.Item1.Price - Math.Truncate(Model.Item1.Price)).ToString().Substring(1)).Replace(",", ".");
+                                                        }
+                                                        else if ((Model.Item1.Price - Math.Truncate(Model.Item1.Price)).ToString().Length == 3)
+                                                        {
+                                                            priceKRText = ((Model.Item1.Price - Math.Truncate(Model.Item1.Price)).ToString().Substring(1) + "0").Replace(",", ".");
+                                                        }
+                                                        else if ((Model.Item1.Price - Math.Truncate(Model.Item1.Price)).ToString().Length == 1)
+                                                        {
+                                                            priceKRText = ".00";
+                                                        }
+                                                        else if ((Model.Item1.Price - Math.Truncate(Model.Item1.Price)).ToString().Length > 4)
+                                                        {
+                                                            priceKRText = (((Model.Item1.Price - Math.Truncate(Model.Item1.Price)).ToString().Substring(0, 4)).Substring(1)).Replace(",", ".");
+                                                        }
+                                                        else
+                                                        {
+                                                            priceKRText = ".00";
+                                                        }
+                                                    }
+
+                                                    <input id="input-priceKR" type="text" class="masked-phone form-control" data-phonemask="@priceKRText">
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text">KR</span>
+                                                    </div>
+                                                </div>
+
+                                                @*<input id="input-name" type="text" class="form-control">*@
+
+                                            </div>
+
+                                        </div>
+
+                                        @*
+                                            <input id="input-name" type="text" class="form-control column">*@
+                                    </div>
+
+
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="control-label col-sm-2">Görsel</label>
+                                    <div id="div-imageUploader" class="col-sm-10">
+                                        <img alt="avatar" src="~/UploadImages/TempMenu/@Model.Item1.ImagePath" style="width: auto; height: 100px;">
+                                        <br />
+                                        <button id="button-deleteImage" class="btn btn-danger btn-sm" type="button" style="margin-top:10px"><i class="fa fa-trash-o"></i> Sil</button>
+                                        <input id="input-imagePath" type="hidden" value="@Model.Item1.ImagePath" />
+
+                                        @*<input id="input-imagePath" type="hidden" />
+                                            <div id="fileuploader" class="btn btn-success btn-sm"></div>
+                                            <div id="extrabutton" class="btn btn-info btn-sm" style="display:none"><i class="fa fa-upload"></i> Yükle</div>*@
+
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-sm-2 control-label"></label>
+                                    <div class="col-sm-10">
+
+                                        <label class="label_check" for="input-showComment" style="padding-bottom:7px">
+                                            @{
+                                                string showCommentText = "";
+                                                if (Model.Item1.ShowComment == true)
+                                                {
+                                                    showCommentText = "checked";
+                                                }
+                                                else
+                                                {
+                                                    showCommentText = "";
+                                                }
+                                            }
+                                            <input id="input-showComment" type="checkbox" @showCommentText> Yorumları Göster
+                                        </label>
+
+                                    </div>
+                                </div>
+                                <div class="form-group row last">
+                                    <label class="col-sm-2 col-sm-2 control-label"></label>
+                                    <div class="col-sm-10">
+
+                                        <label class="label_check" for="input-active" style="padding-bottom:7px">
+                                            @{
+                                                string activeText = "";
+                                                if (Model.Item1.Active == true)
+                                                {
+                                                    activeText = "checked";
+                                                }
+                                                else
+                                                {
+                                                    activeText = "";
+                                                }
+                                            }
+                                            <input id="input-active" type="checkbox" @activeText> Aktif Kategori
+                                        </label>
+
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </section>
+
+
+
+                </div>
+            </div>
+            <!-- page end-->
+        </section>
+    </section>
+    <!--main content end-->
+    <!--footer start-->
+    <footer class="site-footer">
+        <div class="text-center">
+            2018 © FlatLab by VectorLab.
+            <a href="#" class="go-top">
+                <i class="fa fa-angle-up"></i>
+            </a>
+        </div>
+    </footer>
+    <!--footer end-->
+</section>
+
+@section SectionCSS{
+    <!-- Bootstrap core CSS -->
+    <link href="~/Assets/FlatLab/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Assets/FlatLab/css/bootstrap-reset.css" rel="stylesheet">
+    <!--external css-->
+    <link href="~/Assets/FlatLab/assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+
+    <link href="~/Assets/UploadFile/uploadfile.css" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="~/Assets/FlatLab/assets/select2/css/select2.min.css" />
+    <link href="~/Assets/FlatLab/assets/toastr-master/toastr.css" rel="stylesheet" type="text/css" />
+    <!--right slidebar-->
+    <link href="~/Assets/FlatLab/css/slidebars.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="~/Assets/FlatLab/css/style.css" rel="stylesheet">
+    <link href="~/Assets/FlatLab/css/style-responsive.css" rel="stylesheet" />
+
+
+}
+@section SectionJS{
+
+    <!-- js placed at the end of the document so the pages load faster -->
+    <script src="~/Assets/FlatLab/js/jquery.js"></script>
+    <script src="~/Assets/FlatLab/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Assets/FlatLab/js/jquery.scrollTo.min.js"></script>
+    <script src="~/Assets/FlatLab/js/jquery.nicescroll.js" type="text/javascript"></script>
+
+    <script src="~/Assets/FlatLab/js/jquery-ui.min.js"></script>
+    <script class="include" type="text/javascript" src="~/Assets/FlatLab/js/jquery.dcjqaccordion.2.7.js"></script>
+
+    <script src="~/Assets/UploadFile/jquery.uploadfile.js"></script>
+
+    @*<script type="text/javascript" src="~/Assets/FlatLab/assets/fuelux/js/spinner.min.js"></script>*@
+    @*<script type="text/javascript" src="~/Assets/FlatLab/assets/bootstrap-fileupload/bootstrap-fileupload.js"></script>*@
+
+    @*<!--custom switch-->
+    <script src="~/Assets/FlatLab/js/bootstrap-switch.js"></script>
+    <!--custom tagsinput-->
+    <script src="~/Assets/FlatLab/js/jquery.tagsinput.js"></script>*@
+    <!--custom checkbox & radio-->
+    @*<script type="text/javascript" src="~/Assets/FlatLab/js/ga.js"></script>*@
+
+
+    <script type="text/javascript" src="~/Assets/FlatLab/assets/select2/js/select2.min.js"></script>
+
+    <script type="text/javascript" src="~/Assets/FlatLab/assets/bootstrap-inputmask/bootstrap-inputmask.min.js"></script>
+    <script src="~/Assets/InputMask/phone-mask.js"></script>
+    <script src="~/Assets/FlatLab/js/respond.min.js"></script>
+
+    <!--right slidebar-->
+    <script src="~/Assets/FlatLab/js/slidebars.min.js"></script>
+    <script src="~/Assets/FlatLab/assets/toastr-master/toastr.js"></script>
+
+    <!--common script for all pages-->
+    <script src="~/Assets/FlatLab/js/common-scripts.js"></script>
+
+
+    <script src="~/Assets/Local/Admin/js/editmenu.js"></script>
+
+
+
+}

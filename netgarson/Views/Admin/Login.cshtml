@@ -1,0 +1,68 @@
+﻿@{
+    Layout = "~/Views/Shared/_AdminLoginLayout.cshtml";
+}
+
+<div class="container">
+    <form id="form-login" class="form-signin">
+        <h2 class="form-signin-heading">GİRİŞ YAP</h2>
+        <div class="login-wrap">
+            <input id="input-mail" type="text" class="form-control" placeholder="E-posta" autofocus value="osmancayir@outlook.com">
+            <input id="input-password" type="password" class="form-control" placeholder="Şifre">
+            <div>
+                <label class="label_check" for="input-rememberMe" style="padding-bottom:7px">
+                    <input id="input-rememberMe" type="checkbox"> Beni Hatırla
+                </label>
+                <span class="pull-right">
+                    <a data-toggle="modal" href="#modalForgotPassword"> Şifremi Unuttum!</a>
+                </span>
+            </div>
+            <button id="button-login" class="btn btn-lg btn-login btn-block" type="button">GİRİŞ</button>
+        </div>
+    </form>
+</div>
+
+<!-- Modal -->
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="modalForgotPassword" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Şifremi Unuttum ?</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Kayıtlı e-posta adresini gir ve şifresini sıfırlamana yardımcı olalım.</p>
+                <input id="input-sendRepasswordMail" type="text" placeholder="E-posta" autocomplete="off" class="form-control placeholder-no-fix">
+            </div>
+            <div class="modal-footer">
+                <button data-dismiss="modal" class="btn btn-default" type="button">İptal</button>
+                <button id="button-sendRepasswordMail" class="btn btn-success" type="button">Gönder</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- modal -->
+
+@section SectionCSS{
+    <link href="~/Assets/FlatLab/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Assets/FlatLab/css/bootstrap-reset.css" rel="stylesheet" />
+
+    <!--external css-->
+    <link href="~/Assets/FlatLab/assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link href="~/Assets/FlatLab/assets/toastr-master/toastr.css" rel="stylesheet" type="text/css" />
+
+    <!-- Custom styles for this template -->
+    <link href="~/Assets/FlatLab/css/style.css" rel="stylesheet" />
+    <link href="~/Assets/FlatLab/css/style-responsive.css" rel="stylesheet" />
+}
+
+@section SectionJS{
+    <!-- js placed at the end of the document so the pages load faster -->
+    <script src="~/Assets/FlatLab/js/jquery.js"></script>
+    <script src="~/Assets/FlatLab/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Assets/FlatLab/assets/toastr-master/toastr.js"></script>
+
+    <!--script for this page-->
+    <script src="~/Assets/Local/Admin/js/login.js"></script>
+}
