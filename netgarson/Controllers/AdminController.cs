@@ -64,12 +64,21 @@ namespace netgarson.Controllers
         }
 
         [HttpPost]
-        public ActionResult DashboardGetTotalCountList()
+        public ActionResult GetDashboardTotalCountList()
         {
-            var tupleResult = InputControl.DashboardGetTotalCountListControl();
+            var tupleResult = InputControl.GetDashboardTotalCountListControl();
             int errorCode = tupleResult.Item1;
             List<int> countList = tupleResult.Item2;
             return Json(new { result = errorCode, countList });
+        }
+
+        [HttpPost]
+        public ActionResult GetDashboardChartCookie()
+        {
+            var tupleResult = InputControl.GetDashboardChartCookieControl();
+            int errorCode = tupleResult.Item1;
+            List<string> chartCookieList = tupleResult.Item2;
+            return Json(new { result = errorCode, chartCookieList });
         }
 
         #endregion

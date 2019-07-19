@@ -126,7 +126,7 @@ namespace netgarson.Helpers
 
         #region Index
 
-        public static Tuple<int, List<int>> DashboardGetTotalCountListControl()
+        public static Tuple<int, List<int>> GetDashboardTotalCountListControl()
         {
             int errorCode = 0;
             Model model = new Model();
@@ -152,6 +152,84 @@ namespace netgarson.Helpers
             }
             model.Close();
             return Tuple.Create(errorCode, countList); ;
+        }
+
+        public static Tuple<int, List<string>> GetDashboardChartCookieControl()
+        {
+            int errorCode = 0;
+            List<string> chartCookieList = new List<string>();
+            try
+            {
+                HttpCookie Cookie = null;//KLARK
+                if (HttpContext.Current.Response.Cookies["scanChart"].Value != null)
+                {
+                    Cookie = HttpContext.Current.Response.Cookies["scanChart"];
+                }
+                else
+                {
+                    Cookie = new HttpCookie("scanChart");
+                    Cookie["type"] = "daily";
+                    chartCookieList.Add(Cookie["type"]);
+                    if (Convert.ToInt32(DateTime.Now.Month.ToString()) == 1)
+                    {
+                        Cookie["month"] = "12";
+                        chartCookieList.Add(Cookie["month"]);
+                        Cookie["year"] = (Convert.ToInt32(DateTime.Now.ToString()) - 1).ToString();
+                        chartCookieList.Add(Cookie["year"]);
+                    }
+                    else
+                    {
+                        Cookie["month"] = (Convert.ToInt32(DateTime.Now.Month.ToString())-1).ToString();
+                        chartCookieList.Add(Cookie["month"]);
+                        Cookie["year"] = DateTime.Now.Year.ToString();
+                        chartCookieList.Add(Cookie["year"]);
+                    }
+                }
+                Cookie.Expires = DateTime.Now.AddDays(30);
+                HttpContext.Current.Response.Cookies.Add(Cookie);
+
+                Cookie = null;
+                if (HttpContext.Current.Response.Cookies["callChart"].Value != null)
+                {
+                    Cookie = HttpContext.Current.Response.Cookies["callChart"];
+                }
+                else
+                {
+                    Cookie = new HttpCookie("callChart");
+                    Cookie["type"] = "daily";
+                    chartCookieList.Add(Cookie["type"]);
+                    if (Convert.ToInt32(DateTime.Now.Month.ToString()) == 1)
+                    {
+                        Cookie["month"] = "12";
+                        chartCookieList.Add(Cookie["month"]);
+                        Cookie["year"] = (Convert.ToInt32(DateTime.Now.ToString()) - 1).ToString();
+                        chartCookieList.Add(Cookie["year"]);
+                    }
+                    else
+                    {
+                        Cookie["month"] = (Convert.ToInt32(DateTime.Now.Month.ToString()) - 1).ToString();
+                        chartCookieList.Add(Cookie["month"]);
+                        Cookie["year"] = DateTime.Now.Year.ToString();
+                        chartCookieList.Add(Cookie["year"]);
+                    }
+                }
+                Cookie.Expires = DateTime.Now.AddDays(30);
+                HttpContext.Current.Response.Cookies.Add(Cookie);
+                
+                //chartCookieList.Add(HttpContext.Current.Response.Cookies["scanChart"].Values["type"]);
+                //chartCookieList.Add(HttpContext.Current.Response.Cookies["scanChart"].Values["month"]);
+                //chartCookieList.Add(HttpContext.Current.Response.Cookies["scanChart"].Values["year"]);
+                //chartCookieList.Add(HttpContext.Current.Response.Cookies["callChart"].Values["type"]);
+                //chartCookieList.Add(HttpContext.Current.Response.Cookies["callChart"].Values["month"]);
+                //chartCookieList.Add(HttpContext.Current.Response.Cookies["callChart"].Values["year"]);
+
+                errorCode = 100;
+            }
+            catch (Exception)
+            {
+                errorCode = 99;
+            }
+            return Tuple.Create(errorCode, chartCookieList); ;
         }
 
         #endregion

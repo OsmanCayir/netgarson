@@ -3,7 +3,7 @@
     $.ajax({
         type: "POST",
         contentType: "application/jsonrequest; charset=utf-8",
-        url: "/Admin/DashboardGetTotalCountList",
+        url: "/Admin/GetDashboardTotalCountList",
         data: JSON.stringify({}),
         success: function (data) {
             if (data.result == 100) {
@@ -29,7 +29,54 @@
         }
     });
 
+    $.ajax({
+        type: "POST",
+        contentType: "application/jsonrequest; charset=utf-8",
+        url: "/Admin/GetDashboardChartCookie",
+        data: JSON.stringify({}),
+        success: function (data) {
+            if (data.result == 100) {
+                if (data.chartCookieList[0] == "daily") {
+                    $(".a-scanChartDaily").addClass("active");
+                }
+                else if (data.chartCookieList[0] == "monthly") {
+                    $(".a-scanChartMonthly").addClass("active");
+                }
+                else if (data.chartCookieList[0] == "yearly") {
+                    $(".a-scanChartYearly").addClass("active");
+                }
 
+                if (data.chartCookieList[3] == "daily") {
+                    $(".a-callChartDaily").addClass("active");
+                }
+                else if (data.chartCookieList[3] == "monthly") {
+                    $(".a-callChartDaily").addClass("active");
+                }
+                else if (data.chartCookieList[3] == "yearly") {
+                    $(".a-callChartDaily").addClass("active");
+                }
+
+                //setScanTotalCount(data.countList[0]);
+                //setCallTotalCount(data.countList[1]);
+                //setCafeCommentTotalCount(data.countList[2]);
+                //setMenuCommentTotalCount(data.countList[3]);
+            }
+            else if (data.result == 99) {
+                toastr.error("Beklenmedik bir hata oluştu.", "Hata Kodu: 99.");
+            } else {
+                toastr.error("Beklenmedik bir hata oluştu.", "Hata Kodu: Bilinmiyor.");
+            }
+        },
+        error: function (request) {
+            alert(request.responseText);
+        },
+        beforeSend: function () {
+            $('#div-globalLoading').show(0);
+        },
+        complete: function () {
+            $('#div-globalLoading').hide(0);
+        }
+    });
 
     $(".barchart").sparkline([15, 3, 6, 7, 5, 6, 6, 5, 7, 6, 5, 4, 7, 4], {
         type: 'bar',
@@ -42,6 +89,8 @@
         //    '<span style="color: {{color}}">&#9679;</span> {{offset:names}}  ({{percent.1}}%)</span>'
 
     });
+
+ 
 
 });
 
@@ -124,4 +173,8 @@ function setMenuCommentTotalCount(count) {
             clearInterval(int);
         }
     }, int_speed);
+}
+
+function changeCallCookieType(type) {
+
 }
