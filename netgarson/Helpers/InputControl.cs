@@ -86,6 +86,32 @@ namespace netgarson.Helpers
             return errorCode;
         }
 
+        public static int LoginUserControl(string mail, string password)
+        {
+            int errorCode = 0;
+            Model model = new Model();
+            try
+            {
+                User user = model.SELECTUser_WHEREMailANDPassword(mail, password);
+                if (user != null)
+                {
+                    errorCode = 100; //başarılı
+                    System.Web.HttpContext.Current.Session["user"] = user;
+                }
+                else
+                {
+                    errorCode = 200; //kullanıcı adı veya şifre uyumsuz
+                }
+            }
+            catch (Exception)
+            {
+                model.Close();
+                errorCode = 99; //beklnmedik bir hata oluştu
+            }
+            model.Close();
+            return errorCode;
+        }
+
         public static int SendRepasswordMailControl(string mail)
         {
             int errorCode = 0;
@@ -169,23 +195,21 @@ namespace netgarson.Helpers
                 {
                     Cookie = new HttpCookie("scanChart");
                     Cookie["type"] = "daily";
-                    chartCookieList.Add(Cookie["type"]);
                     if (Convert.ToInt32(DateTime.Now.Month.ToString()) == 1)
                     {
                         Cookie["month"] = "12";
-                        chartCookieList.Add(Cookie["month"]);
                         Cookie["year"] = (Convert.ToInt32(DateTime.Now.ToString()) - 1).ToString();
-                        chartCookieList.Add(Cookie["year"]);
                     }
                     else
                     {
                         Cookie["month"] = (Convert.ToInt32(DateTime.Now.Month.ToString())-1).ToString();
-                        chartCookieList.Add(Cookie["month"]);
                         Cookie["year"] = DateTime.Now.Year.ToString();
-                        chartCookieList.Add(Cookie["year"]);
                     }
                 }
                 Cookie.Expires = DateTime.Now.AddDays(30);
+                chartCookieList.Add(Cookie.Values["type"]);
+                chartCookieList.Add(Cookie.Values["month"]);
+                chartCookieList.Add(Cookie.Values["year"]);
                 HttpContext.Current.Response.Cookies.Add(Cookie);
 
                 Cookie = null;
@@ -214,15 +238,11 @@ namespace netgarson.Helpers
                     }
                 }
                 Cookie.Expires = DateTime.Now.AddDays(30);
+                chartCookieList.Add(Cookie.Values["type"]);
+                chartCookieList.Add(Cookie.Values["month"]);
+                chartCookieList.Add(Cookie.Values["year"]);
                 HttpContext.Current.Response.Cookies.Add(Cookie);
                 
-                //chartCookieList.Add(HttpContext.Current.Response.Cookies["scanChart"].Values["type"]);
-                //chartCookieList.Add(HttpContext.Current.Response.Cookies["scanChart"].Values["month"]);
-                //chartCookieList.Add(HttpContext.Current.Response.Cookies["scanChart"].Values["year"]);
-                //chartCookieList.Add(HttpContext.Current.Response.Cookies["callChart"].Values["type"]);
-                //chartCookieList.Add(HttpContext.Current.Response.Cookies["callChart"].Values["month"]);
-                //chartCookieList.Add(HttpContext.Current.Response.Cookies["callChart"].Values["year"]);
-
                 errorCode = 100;
             }
             catch (Exception)

@@ -17,7 +17,7 @@ namespace netgarson.Controllers
             {
                 string mail = ((User)HttpContext.Current.Session["user"]).Mail;
                 string password = ((User)HttpContext.Current.Session["user"]).Password;
-                int errorCode = InputControl.LoginUserControl(mail, password, true);
+                int errorCode = InputControl.LoginUserControl(mail, password);
                 if (errorCode != 100)
                 {
                     if (ViewName == "" || ViewName == null)
