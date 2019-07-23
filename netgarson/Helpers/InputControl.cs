@@ -241,7 +241,7 @@ namespace netgarson.Helpers
                 chartCookieList.Add(Cookie.Values["type"]);
                 chartCookieList.Add(Cookie.Values["month"]);
                 chartCookieList.Add(Cookie.Values["year"]);
-                HttpContext.Current.Response.Cookies.Add(Cookie);
+                HttpContext.Current.Response.Cookies.Add(Cookie);//
                 
                 errorCode = 100;
             }
