@@ -73,12 +73,12 @@ namespace netgarson.Controllers
         }
 
         [HttpPost]
-        public ActionResult GetDashboardChartCookie()
+        public ActionResult GetDashboardChart()
         {
-            var tupleResult = InputControl.GetDashboardChartCookieControl();
+            var tupleResult = InputControl.GetDashboardChartControl();
             int errorCode = tupleResult.Item1;
-            List<string> chartCookieList = tupleResult.Item2;
-            return Json(new { result = errorCode, chartCookieList });
+            Set set = tupleResult.Item2;
+            return Json(new { result = errorCode, set });
         }
 
         #endregion
@@ -753,12 +753,11 @@ namespace netgarson.Controllers
                 {
                     string mail = Request.Cookies["loginValues"].Values["mail"];
                     string password = Request.Cookies["loginValues"].Values["password"];
-                    int errorCode = InputControl.LoginUserControl(mail, password, true);
+                    int errorCode = InputControl.LoginUserControl(mail, password);
                     if (errorCode == 100)
                     {
                         return RedirectToAction(view, "Admin");
                     }
-
                 }
                 return RedirectToAction("Login", "Admin");
             }
@@ -823,5 +822,6 @@ namespace netgarson.Controllers
         }
 
         #endregion
+
     }
 }

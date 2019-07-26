@@ -180,77 +180,104 @@ namespace netgarson.Helpers
             return Tuple.Create(errorCode, countList); ;
         }
 
-        public static Tuple<int, List<string>> GetDashboardChartCookieControl()
+        public static Tuple<int, Set> GetDashboardChartControl()
         {
             int errorCode = 0;
-            List<string> chartCookieList = new List<string>();
+            Model model = new Model();
+            Set set = new Set();
             try
             {
-                HttpCookie Cookie = null;//KLARK
-                if (HttpContext.Current.Response.Cookies["scanChart"].Value != null)
-                {
-                    Cookie = HttpContext.Current.Response.Cookies["scanChart"];
-                }
-                else
-                {
-                    Cookie = new HttpCookie("scanChart");
-                    Cookie["type"] = "daily";
-                    if (Convert.ToInt32(DateTime.Now.Month.ToString()) == 1)
-                    {
-                        Cookie["month"] = "12";
-                        Cookie["year"] = (Convert.ToInt32(DateTime.Now.ToString()) - 1).ToString();
-                    }
-                    else
-                    {
-                        Cookie["month"] = (Convert.ToInt32(DateTime.Now.Month.ToString())-1).ToString();
-                        Cookie["year"] = DateTime.Now.Year.ToString();
-                    }
-                }
-                Cookie.Expires = DateTime.Now.AddDays(30);
-                chartCookieList.Add(Cookie.Values["type"]);
-                chartCookieList.Add(Cookie.Values["month"]);
-                chartCookieList.Add(Cookie.Values["year"]);
-                HttpContext.Current.Response.Cookies.Add(Cookie);
+                int user_ID = (HttpContext.Current.Session["user"] as User).ID;
+                Set set = model.SELECTSet(user_ID);
 
-                Cookie = null;
-                if (HttpContext.Current.Response.Cookies["callChart"].Value != null)
+                if (set != null)
                 {
-                    Cookie = HttpContext.Current.Response.Cookies["callChart"];
+                    errorCode = 100;
                 }
                 else
                 {
-                    Cookie = new HttpCookie("callChart");
-                    Cookie["type"] = "daily";
-                    chartCookieList.Add(Cookie["type"]);
-                    if (Convert.ToInt32(DateTime.Now.Month.ToString()) == 1)
-                    {
-                        Cookie["month"] = "12";
-                        chartCookieList.Add(Cookie["month"]);
-                        Cookie["year"] = (Convert.ToInt32(DateTime.Now.ToString()) - 1).ToString();
-                        chartCookieList.Add(Cookie["year"]);
-                    }
-                    else
-                    {
-                        Cookie["month"] = (Convert.ToInt32(DateTime.Now.Month.ToString()) - 1).ToString();
-                        chartCookieList.Add(Cookie["month"]);
-                        Cookie["year"] = DateTime.Now.Year.ToString();
-                        chartCookieList.Add(Cookie["year"]);
-                    }
+                    errorCode = 200;
                 }
-                Cookie.Expires = DateTime.Now.AddDays(30);
-                chartCookieList.Add(Cookie.Values["type"]);
-                chartCookieList.Add(Cookie.Values["month"]);
-                chartCookieList.Add(Cookie.Values["year"]);
-                HttpContext.Current.Response.Cookies.Add(Cookie);//
-                
-                errorCode = 100;
+
             }
             catch (Exception)
             {
+                model.Close();
                 errorCode = 99;
             }
-            return Tuple.Create(errorCode, chartCookieList); ;
+            model.Close();
+            return Tuple.Create(errorCode, set); ;
         }
+        //public static Tuple<int, List<string>> GetDashboardChartCookieControl(bool scanChartIsExist, bool callChartIsExist)
+        //{
+        //    int errorCode = 0;
+        //    List<string> chartCookieList = new List<string>();
+        //    try
+        //    {
+        //        HttpCookie Cookie = null;//KLARK
+        //        if (HttpContext.Current.Response.Cookies["scanChart"].Value != null)
+        //        {
+        //            Cookie = HttpContext.Current.Response.Cookies["scanChart"];
+        //        }
+        //        else
+        //        {
+        //            Cookie = new HttpCookie("scanChart");
+        //            Cookie["type"] = "daily";
+        //            if (Convert.ToInt32(DateTime.Now.Month.ToString()) == 1)
+        //            {
+        //                Cookie["month"] = "12";
+        //                Cookie["year"] = (Convert.ToInt32(DateTime.Now.ToString()) - 1).ToString();
+        //            }
+        //            else
+        //            {
+        //                Cookie["month"] = (Convert.ToInt32(DateTime.Now.Month.ToString())-1).ToString();
+        //                Cookie["year"] = DateTime.Now.Year.ToString();
+        //            }
+        //        }
+        //        Cookie.Expires = DateTime.Now.AddDays(30);
+
+        //        chartCookieList.Add(Cookie.Values["type"]);
+        //        chartCookieList.Add(Cookie.Values["month"]);
+        //        chartCookieList.Add(Cookie.Values["year"]);
+
+        //        HttpContext.Current.Response.Cookies.Add(Cookie);
+
+        //        Cookie = null;
+        //        if (HttpContext.Current.Response.Cookies["callChart"].Value != null)
+        //        {
+        //            Cookie = HttpContext.Current.Response.Cookies["callChart"];
+        //        }
+        //        else
+        //        {
+        //            Cookie = new HttpCookie("callChart");
+        //            Cookie["type"] = "daily";
+        //            if (Convert.ToInt32(DateTime.Now.Month.ToString()) == 1)
+        //            {
+        //                Cookie["month"] = "12";
+        //                Cookie["year"] = (Convert.ToInt32(DateTime.Now.ToString()) - 1).ToString();
+        //            }
+        //            else
+        //            {
+        //                Cookie["month"] = (Convert.ToInt32(DateTime.Now.Month.ToString()) - 1).ToString();
+        //                Cookie["year"] = DateTime.Now.Year.ToString();
+        //            }
+        //        }
+        //        Cookie.Expires = DateTime.Now.AddDays(30);
+
+        //        chartCookieList.Add(Cookie.Values["type"]);
+        //        chartCookieList.Add(Cookie.Values["month"]);
+        //        chartCookieList.Add(Cookie.Values["year"]);
+
+        //        HttpContext.Current.Response.Cookies.Add(Cookie);//
+
+        //        errorCode = 100;
+        //    }
+        //    catch (Exception)
+        //    {
+        //        errorCode = 99;
+        //    }
+        //    return Tuple.Create(errorCode, chartCookieList); ;
+        //}
 
         #endregion
 

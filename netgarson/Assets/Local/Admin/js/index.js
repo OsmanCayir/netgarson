@@ -29,10 +29,12 @@
         }
     });
 
+
+
     $.ajax({
         type: "POST",
         contentType: "application/jsonrequest; charset=utf-8",
-        url: "/Admin/GetDashboardChartCookie",
+        url: "/Admin/GetDashboardChart",
         data: JSON.stringify({}),
         success: function (data) {
             if (data.result == 100) {
