@@ -77,8 +77,26 @@ namespace netgarson.Controllers
         {
             var tupleResult = InputControl.GetDashboardChartControl();
             int errorCode = tupleResult.Item1;
-            Set set = tupleResult.Item2;
-            return Json(new { result = errorCode, set });
+            List<string> chartValueList = tupleResult.Item2;
+            return Json(new { result = errorCode, chartValueList });
+        }
+
+        [HttpPost]
+        public ActionResult GetDashboardChartYearSelect()
+        {
+            var tupleResult = InputControl.GetDashboardChartYearSelectControl();
+            int errorCode = tupleResult.Item1;
+            List<Year> yearList = tupleResult.Item2;
+            return Json(new { result = errorCode, yearList });
+        }
+
+        [HttpPost]
+        public ActionResult GetDashboardChartYearDecadeSelect()
+        {
+            var tupleResult = InputControl.GetDashboardChartYearDecadeSelectControl();
+            int errorCode = tupleResult.Item1;
+            List<YearDecade> yearDecadeList = tupleResult.Item2;
+            return Json(new { result = errorCode, yearDecadeList });
         }
 
         #endregion

@@ -29,7 +29,71 @@
         }
     });
 
+    $.ajax({
+        type: "POST",
+        contentType: "application/jsonrequest; charset=utf-8",
+        url: "/Admin/GetDashboardChartYearSelect",
+        data: JSON.stringify({}),
+        success: function (data) {
+            if (data.result == 100) {
+                var html = "";
+                for (var i = 0; i < data.yearList.count; i++) {
+                    html += "<option>" + data.yearList[i].Value + "</option>";
+                }
+                $(".select-year").html(html);
+            }
+            else if (data.result == 200) {
+                toastr.error("Veritabanı boş tablo hatası.", "Hata Kodu: 200.");
+            }
+            else if (data.result == 99) {
+                toastr.error("Beklenmedik bir hata oluştu.", "Hata Kodu: 99.");
+            } else {
+                toastr.error("Beklenmedik bir hata oluştu.", "Hata Kodu: Bilinmiyor.");
+            }
+        },
+        error: function (request) {
+            alert(request.responseText);
+        },
+        beforeSend: function () {
+            $('#div-globalLoading').show(0);
+        },
+        complete: function () {
+            $('#div-globalLoading').hide(0);
+        }
+    });
 
+    $.ajax({
+        type: "POST",
+        contentType: "application/jsonrequest; charset=utf-8",
+        url: "/Admin/GetDashboardChartYearDecadeSelect",
+        data: JSON.stringify({}),
+        success: function (data) {
+            if (data.result == 100) {
+                var html = "";
+                for (var i = 0; i < data.yearDecadeList.count; i++) {
+                    html += "<option>" + data.yearDecadeList[i].BeginValue - data.yearDecadeList[i].EndValue + "</option>";
+                }
+                $(".select-yearDecade").html(html);
+            }
+            else if (data.result == 200) {
+                toastr.error("Veritabanı boş tablo hatası.", "Hata Kodu: 200.");
+            }
+            else if (data.result == 99) {
+                toastr.error("Beklenmedik bir hata oluştu.", "Hata Kodu: 99.");
+            } else {
+                toastr.error("Beklenmedik bir hata oluştu.", "Hata Kodu: Bilinmiyor.");
+            }
+        },
+        error: function (request) {
+            alert(request.responseText);
+        },
+        beforeSend: function () {
+            $('#div-globalLoading').show(0);
+        },
+        complete: function () {
+            $('#div-globalLoading').hide(0);
+        }
+    });
 
     $.ajax({
         type: "POST",
@@ -39,29 +103,66 @@
         success: function (data) {
             if (data.result == 100) {
                 if (data.chartCookieList[0] == "daily") {
+
                     $(".a-scanChartDaily").addClass("active");
+                    $(".a-scanChartMonthly").removeClass("active");
+                    $(".a-scanChartYearly").removeClass("active");
+
+                    $("#div-scanMonthSelect").show();
+                    $("#div-scanYearSelect").show();
+                    $("#div-scanYearDecadeSelect").hide();
                 }
                 else if (data.chartCookieList[0] == "monthly") {
+
+                    $(".a-scanChartDaily").removeClass("active");
                     $(".a-scanChartMonthly").addClass("active");
+                    $(".a-scanChartYearly").removeClass("active");
+
+                    $("#div-scanMonthSelect").hide();
+                    $("#div-scanYearSelect").show();
+                    $("#div-scanYearDecadeSelect").hide();
                 }
                 else if (data.chartCookieList[0] == "yearly") {
+
+                    $(".a-scanChartDaily").removeClass("active");
+                    $(".a-scanChartMonthly").removeClass("active");
                     $(".a-scanChartYearly").addClass("active");
+
+                    $("#div-scanMonthSelect").hide();
+                    $("#div-scanYearSelect").hide();
+                    $("#div-scanYearDecadeSelect").show();
                 }
 
                 if (data.chartCookieList[3] == "daily") {
+
                     $(".a-callChartDaily").addClass("active");
+                    $(".a-callChartMonthly").removeClass("active");
+                    $(".a-callChartYearly").removeClass("active");
+
+                    $("#div-callMonthSelect").show();
+                    $("#div-callYearSelect").show();
+                    $("#div-callYearDecadeSelect").hide();
                 }
                 else if (data.chartCookieList[3] == "monthly") {
-                    $(".a-callChartDaily").addClass("active");
+
+                    $(".a-callChartDaily").removeClass("active");
+                    $(".a-callChartMonthly").addClass("active");
+                    $(".a-callChartYearly").removeClass("active");
+
+                    $("#div-callMonthSelect").hide();
+                    $("#div-callYearSelect").show();
+                    $("#div-callYearDecadeSelect").hide();
                 }
                 else if (data.chartCookieList[3] == "yearly") {
-                    $(".a-callChartDaily").addClass("active");
-                }
 
-                //setScanTotalCount(data.countList[0]);
-                //setCallTotalCount(data.countList[1]);
-                //setCafeCommentTotalCount(data.countList[2]);
-                //setMenuCommentTotalCount(data.countList[3]);
+                    $(".a-callChartDaily").removeClass("active");
+                    $(".a-callChartMonthly").removeClass("active");
+                    $(".a-callChartYearly").addClass("active");
+
+                    $("#div-callMonthSelect").hide();
+                    $("#div-callYearSelect").hide();
+                    $("#div-callYearDecadeSelect").show();
+                }
             }
             else if (data.result == 99) {
                 toastr.error("Beklenmedik bir hata oluştu.", "Hata Kodu: 99.");
@@ -92,7 +193,7 @@
 
     });
 
- 
+
 
 });
 

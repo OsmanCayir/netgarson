@@ -19,15 +19,7 @@ namespace netgarson.Entities
 
         public string ScanChartType { get; set; }
 
-        public int ScanChartMonth { get; set; }
-
-        public int ScanChartYear { get; set; }
-
         public string CallChartType { get; set; }
-
-        public int CallChartMonth { get; set; }
-
-        public int CallChartYear { get; set; }
 
         public int User_ID { get; set; }
     }

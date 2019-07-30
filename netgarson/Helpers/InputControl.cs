@@ -180,18 +180,59 @@ namespace netgarson.Helpers
             return Tuple.Create(errorCode, countList); ;
         }
 
-        public static Tuple<int, Set> GetDashboardChartControl()
+        public static Tuple<int, List<string>> GetDashboardChartControl()
         {
             int errorCode = 0;
             Model model = new Model();
             Set set = new Set();
+            List<string> chartValueList = new List<string>();
             try
             {
                 int user_ID = (HttpContext.Current.Session["user"] as User).ID;
-                Set set = model.SELECTSet(user_ID);
+                set = model.SELECTSet(user_ID);
 
                 if (set != null)
                 {
+                    chartValueList.Add(set.ScanChartType);
+                    chartValueList.Add(set.CallChartType);
+                    chartValueList.Add(DateTime.Now.Month.ToString());
+                    chartValueList.Add(DateTime.Now.Year.ToString());
+
+                    //if (set.ScanChartType == "daily")
+                    //{
+                    //    chartValueList.Add("daily");
+                    //    chartValueList.Add(Convert.ToInt32(DateTime.Now.Month.ToString()).ToString());
+                    //    chartValueList.Add(Convert.ToInt32(DateTime.Now.Year.ToString()).ToString());
+                    //}
+                    //else if(set.ScanChartType== "monthly")
+                    //{
+                    //    chartValueList.Add("monthly");
+                    //    chartValueList.Add(Convert.ToInt32(DateTime.Now.Year.ToString()).ToString());
+                    //}
+                    //else if (set.ScanChartType == "yearly")
+                    //{
+                    //    chartValueList.Add("yearly");
+                    //    chartValueList.Add(Convert.ToInt32(DateTime.Now.Year.ToString()).ToString());
+                    //}
+
+                    //if (set.CallChartType == "daily")
+                    //{
+                    //    chartValueList.Add("daily");
+                    //    chartValueList.Add(Convert.ToInt32(DateTime.Now.Month.ToString()).ToString());
+                    //    chartValueList.Add(Convert.ToInt32(DateTime.Now.Year.ToString()).ToString());
+                    //}
+                    //else if (set.CallChartType == "monthly")
+                    //{
+                    //    chartValueList.Add("monthly");
+                    //    chartValueList.Add(Convert.ToInt32(DateTime.Now.Year.ToString()).ToString());
+                    //}
+                    //else if (set.CallChartType == "yearly")
+                    //{
+                    //    chartValueList.Add("yearly");
+                    //    chartValueList.Add(Convert.ToInt32(DateTime.Now.Year.ToString()).ToString());
+                    //}
+
+
                     errorCode = 100;
                 }
                 else
@@ -206,78 +247,81 @@ namespace netgarson.Helpers
                 errorCode = 99;
             }
             model.Close();
-            return Tuple.Create(errorCode, set); ;
+            return Tuple.Create(errorCode, chartValueList); ;
         }
-        //public static Tuple<int, List<string>> GetDashboardChartCookieControl(bool scanChartIsExist, bool callChartIsExist)
-        //{
-        //    int errorCode = 0;
-        //    List<string> chartCookieList = new List<string>();
-        //    try
-        //    {
-        //        HttpCookie Cookie = null;//KLARK
-        //        if (HttpContext.Current.Response.Cookies["scanChart"].Value != null)
-        //        {
-        //            Cookie = HttpContext.Current.Response.Cookies["scanChart"];
-        //        }
-        //        else
-        //        {
-        //            Cookie = new HttpCookie("scanChart");
-        //            Cookie["type"] = "daily";
-        //            if (Convert.ToInt32(DateTime.Now.Month.ToString()) == 1)
-        //            {
-        //                Cookie["month"] = "12";
-        //                Cookie["year"] = (Convert.ToInt32(DateTime.Now.ToString()) - 1).ToString();
-        //            }
-        //            else
-        //            {
-        //                Cookie["month"] = (Convert.ToInt32(DateTime.Now.Month.ToString())-1).ToString();
-        //                Cookie["year"] = DateTime.Now.Year.ToString();
-        //            }
-        //        }
-        //        Cookie.Expires = DateTime.Now.AddDays(30);
 
-        //        chartCookieList.Add(Cookie.Values["type"]);
-        //        chartCookieList.Add(Cookie.Values["month"]);
-        //        chartCookieList.Add(Cookie.Values["year"]);
+        public static Tuple<int, List<Year>> GetDashboardChartYearSelectControl()
+        {
+            int errorCode = 0;
+            Model model = new Model();
+            List<Year> yearList = new List<Year>();
+            try
+            {
+                int user_ID = (HttpContext.Current.Session["user"] as User).ID;
+                yearList = model.SELECTYear_ORDERBYValue();
 
-        //        HttpContext.Current.Response.Cookies.Add(Cookie);
+                if (yearList != null)
+                {
+                    if(DateTime.Now.Year!= yearList.Select(m => m.Value).Max())
+                    {
+                        Year year = new Year();
+                        year.Value = DateTime.Now.Year;
+                        model.INSERTYear(year);
+                        yearList.Add(year);
+                    }
+                    errorCode = 100;
+                }
+                else
+                {
+                    errorCode = 200;
+                }
 
-        //        Cookie = null;
-        //        if (HttpContext.Current.Response.Cookies["callChart"].Value != null)
-        //        {
-        //            Cookie = HttpContext.Current.Response.Cookies["callChart"];
-        //        }
-        //        else
-        //        {
-        //            Cookie = new HttpCookie("callChart");
-        //            Cookie["type"] = "daily";
-        //            if (Convert.ToInt32(DateTime.Now.Month.ToString()) == 1)
-        //            {
-        //                Cookie["month"] = "12";
-        //                Cookie["year"] = (Convert.ToInt32(DateTime.Now.ToString()) - 1).ToString();
-        //            }
-        //            else
-        //            {
-        //                Cookie["month"] = (Convert.ToInt32(DateTime.Now.Month.ToString()) - 1).ToString();
-        //                Cookie["year"] = DateTime.Now.Year.ToString();
-        //            }
-        //        }
-        //        Cookie.Expires = DateTime.Now.AddDays(30);
+            }
+            catch (Exception)
+            {
+                model.Close();
+                errorCode = 99;
+            }
+            model.Close();
+            return Tuple.Create(errorCode, yearList); ;
+        }
 
-        //        chartCookieList.Add(Cookie.Values["type"]);
-        //        chartCookieList.Add(Cookie.Values["month"]);
-        //        chartCookieList.Add(Cookie.Values["year"]);
+        public static Tuple<int, List<YearDecade>> GetDashboardChartYearDecadeSelectControl()
+        {
+            int errorCode = 0;
+            Model model = new Model();
+            List<YearDecade> yearDecadeList = new List<YearDecade>();
+            try
+            {
+                int user_ID = (HttpContext.Current.Session["user"] as User).ID;
+                yearDecadeList = model.SELECTYearDecade_ORDERBYBeginValue();
 
-        //        HttpContext.Current.Response.Cookies.Add(Cookie);//
+                if (yearDecadeList != null)
+                {
+                    if (DateTime.Now.Year > yearDecadeList.Select(m => m.EndValue).Max())
+                    {
+                        YearDecade yearDecade = new YearDecade();
+                        yearDecade.BeginValue = DateTime.Now.Year;
+                        yearDecade.EndValue = DateTime.Now.Year + 9;
+                        model.INSERTYearDecade(yearDecade);
+                        yearDecadeList.Add(yearDecade);
+                    }
+                    errorCode = 100;
+                }
+                else
+                {
+                    errorCode = 200;
+                }
 
-        //        errorCode = 100;
-        //    }
-        //    catch (Exception)
-        //    {
-        //        errorCode = 99;
-        //    }
-        //    return Tuple.Create(errorCode, chartCookieList); ;
-        //}
+            }
+            catch (Exception)
+            {
+                model.Close();
+                errorCode = 99;
+            }
+            model.Close();
+            return Tuple.Create(errorCode, yearDecadeList); ;
+        }
 
         #endregion
 

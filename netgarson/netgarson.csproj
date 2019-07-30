@@ -143,6 +143,8 @@
     <Compile Include="Entities\Scan.cs" />
     <Compile Include="Entities\Set.cs" />
     <Compile Include="Entities\User.cs" />
+    <Compile Include="Entities\Year.cs" />
+    <Compile Include="Entities\YearDecade.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

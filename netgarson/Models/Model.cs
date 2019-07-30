@@ -186,7 +186,7 @@ namespace netgarson.Models
         {
             return connection.Query<int>("SELECT COUNT(*) FROM netgarson.dbo.[CafeComment] WHERE User_ID = @User_ID AND IsNew = @IsNew", new { user_ID, isNew }).FirstOrDefault();
         }
-        
+
         public List<CafeComment> SELECTCafeComment_WHEREIsNew_ORDERBYRecordDate(int user_ID, bool isNew)
         {
             return connection.Query<CafeComment>("SELECT * FROM netgarson.dbo.[CafeComment] WHERE User_ID = @User_ID AND IsNew = @IsNew ORDER BY RecordDate DESC", new { user_ID, isNew }).ToList();
@@ -349,6 +349,34 @@ namespace netgarson.Models
         public Set SELECTSet(int user_ID)//
         {
             return connection.Query<Set>("SELECT * FROM netgarson.dbo.[Set] WHERE User_ID = @User_ID", new { user_ID }).FirstOrDefault();
+        }
+
+        #endregion
+
+        #region Year
+
+        public List<Year> SELECTYear_ORDERBYValue()
+        {
+            return connection.Query<Year>("SELECT * FROM netgarson.dbo.[Year] ORDER BY Value DESC").ToList();
+        }
+
+        public void INSERTYear(Year year)
+        {
+            connection.Execute("INSERT INTO netgarson.dbo.[Year]([Value]) VALUES (@Value)", new { year.Value });
+        }
+
+        #endregion
+
+        #region Year
+
+        public List<YearDecade> SELECTYearDecade_ORDERBYBeginValue()
+        {
+            return connection.Query<YearDecade>("SELECT * FROM netgarson.dbo.[YearDecade] ORDER BY BeginValue DESC").ToList();
+        }
+
+        public void INSERTYearDecade(YearDecade yearDecade)
+        {
+            connection.Execute("INSERT INTO netgarson.dbo.[YearDecade]([BeginValue], [EndValue]) VALUES (@BeginValue, @EndValue)", new { yearDecade.BeginValue, yearDecade.EndValue });
         }
 
         #endregion
