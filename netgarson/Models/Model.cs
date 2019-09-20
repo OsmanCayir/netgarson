@@ -29,7 +29,7 @@ namespace netgarson.Models
 
         public Category SELECTCategory_WHERENameANDUser_ID(string name, int user_ID)
         {
-            return connection.Query<Category>("SELECT * FROM netgarson.dbo.[Category] WHERE Name = @Name AND User_ID = @User_ID", new { name, user_ID }).FirstOrDefault();
+            return connection.Query<Category>("SELECT * FROM netgarson.dbo.[Category] WHERE Name = @name AND User_ID = @user_ID", new { name, user_ID }).FirstOrDefault();
         }
 
         public void INSERTCategory(Category category)
@@ -44,7 +44,7 @@ namespace netgarson.Models
 
         public List<Category> SELECTCategory(int user_ID)//
         {
-            return connection.Query<Category>("SELECT * FROM netgarson.dbo.[Category] WHERE User_ID = @User_ID", new { user_ID }).ToList();
+            return connection.Query<Category>("SELECT * FROM netgarson.dbo.[Category] WHERE User_ID = @user_ID", new { user_ID }).ToList();
         }
 
         public Category SELECTCategory_WHEREID(int ID)//
@@ -96,7 +96,7 @@ namespace netgarson.Models
 
         public List<Menu> SELECTMenu(int user_ID)
         {
-            return connection.Query<Menu>("SELECT * FROM netgarson.dbo.[Menu] WHERE User_ID = @User_ID", new { user_ID }).ToList();
+            return connection.Query<Menu>("SELECT * FROM netgarson.dbo.[Menu] WHERE User_ID = @user_ID", new { user_ID }).ToList();
         }
 
         public void INSERTMenu(Menu menu)
@@ -116,7 +116,7 @@ namespace netgarson.Models
 
         public Menu SELECTMenu_WHERENameANDUser_ID(string name, int user_ID)
         {
-            return connection.Query<Menu>("SELECT * FROM netgarson.dbo.[Menu] WHERE Name = @Name AND User_ID = @User_ID", new { name, user_ID }).FirstOrDefault();
+            return connection.Query<Menu>("SELECT * FROM netgarson.dbo.[Menu] WHERE Name = @name AND User_ID = @user_ID", new { name, user_ID }).FirstOrDefault();
         }
 
         public int INSERTMenu_RETURNID(Menu menu)
@@ -154,7 +154,7 @@ namespace netgarson.Models
 
         public List<CafeComment> SELECTCafeComment(int user_ID)
         {
-            return connection.Query<CafeComment>("SELECT * FROM netgarson.dbo.[CafeComment] WHERE User_ID = @User_ID", new { user_ID }).ToList();
+            return connection.Query<CafeComment>("SELECT * FROM netgarson.dbo.[CafeComment] WHERE User_ID = @user_ID", new { user_ID }).ToList();
         }
 
         public void DELETECafeComment_WHEREID(int ID)
@@ -179,17 +179,17 @@ namespace netgarson.Models
 
         public int COUNTCafeComment(int user_ID)
         {
-            return connection.Query<int>("SELECT COUNT(*) FROM netgarson.dbo.[CafeComment] WHERE User_ID = @User_ID", new { user_ID }).FirstOrDefault();
+            return connection.Query<int>("SELECT COUNT(*) FROM netgarson.dbo.[CafeComment] WHERE User_ID = @user_ID", new { user_ID }).FirstOrDefault();
         }
 
         public int COUNTCafeComment_WHEREIsNew(int user_ID, bool isNew)
         {
-            return connection.Query<int>("SELECT COUNT(*) FROM netgarson.dbo.[CafeComment] WHERE User_ID = @User_ID AND IsNew = @IsNew", new { user_ID, isNew }).FirstOrDefault();
+            return connection.Query<int>("SELECT COUNT(*) FROM netgarson.dbo.[CafeComment] WHERE User_ID = @user_ID AND IsNew = @isNew", new { user_ID, isNew }).FirstOrDefault();
         }
 
         public List<CafeComment> SELECTCafeComment_WHEREIsNew_ORDERBYRecordDate(int user_ID, bool isNew)
         {
-            return connection.Query<CafeComment>("SELECT * FROM netgarson.dbo.[CafeComment] WHERE User_ID = @User_ID AND IsNew = @IsNew ORDER BY RecordDate DESC", new { user_ID, isNew }).ToList();
+            return connection.Query<CafeComment>("SELECT * FROM netgarson.dbo.[CafeComment] WHERE User_ID = @user_ID AND IsNew = @isNew ORDER BY RecordDate DESC", new { user_ID, isNew }).ToList();
         }
 
         #endregion
@@ -198,7 +198,7 @@ namespace netgarson.Models
 
         public List<MenuComment> SELECTMenuComment(int user_ID)
         {
-            return connection.Query<MenuComment>("SELECT * FROM netgarson.dbo.[MenuComment] WHERE User_ID = @User_ID", new { user_ID }).ToList();
+            return connection.Query<MenuComment>("SELECT * FROM netgarson.dbo.[MenuComment] WHERE User_ID = @user_ID", new { user_ID }).ToList();
         }
 
         public void DELETEMenuComment_WHEREID(int ID)
@@ -213,7 +213,7 @@ namespace netgarson.Models
 
         public List<MenuComment> SELECTMenuComment_WHERECommentText(string commentText, int user_ID)
         {
-            return connection.Query<MenuComment>("SELECT * FROM netgarson.dbo.[MenuComment] WHERE CommentText = @CommentText AND User_ID = @User_ID", new { commentText, user_ID }).ToList();
+            return connection.Query<MenuComment>("SELECT * FROM netgarson.dbo.[MenuComment] WHERE CommentText = @CommentText AND User_ID = @user_ID", new { commentText, user_ID }).ToList();
         }
 
         public MenuComment SELECTMenuComment_WHEREID(int ID)//
@@ -228,17 +228,17 @@ namespace netgarson.Models
 
         public int COUNTMenuComment(int user_ID)
         {
-            return connection.Query<int>("SELECT COUNT(*) FROM netgarson.dbo.[MenuComment] WHERE User_ID = @User_ID", new { user_ID }).FirstOrDefault();
+            return connection.Query<int>("SELECT COUNT(*) FROM netgarson.dbo.[MenuComment] WHERE User_ID = @user_ID", new { user_ID }).FirstOrDefault();
         }
 
         public int COUNTMenuComment_WHEREIsNew(int user_ID, bool isNew)
         {
-            return connection.Query<int>("SELECT COUNT(*) FROM netgarson.dbo.[MenuComment] WHERE User_ID = @User_ID AND IsNew = @IsNew", new { user_ID, isNew }).FirstOrDefault();
+            return connection.Query<int>("SELECT COUNT(*) FROM netgarson.dbo.[MenuComment] WHERE User_ID = @user_ID AND IsNew = @isNew", new { user_ID, isNew }).FirstOrDefault();
         }
 
         public List<MenuComment> SELECTMenuComment_WHEREIsNew_ORDERBYRecordDate(int user_ID, bool isNew)
         {
-            return connection.Query<MenuComment>("SELECT * FROM netgarson.dbo.[MenuComment] WHERE User_ID = @User_ID AND IsNew = @IsNew ORDER BY RecordDate DESC", new { user_ID, isNew }).ToList();
+            return connection.Query<MenuComment>("SELECT * FROM netgarson.dbo.[MenuComment] WHERE User_ID = @user_ID AND IsNew = @isNew ORDER BY RecordDate DESC", new { user_ID, isNew }).ToList();
         }
         #endregion
 
@@ -246,7 +246,7 @@ namespace netgarson.Models
 
         public List<QrCode> SELECTQrCode(int user_ID)
         {
-            return connection.Query<QrCode>("SELECT * FROM netgarson.dbo.[QrCode] WHERE User_ID = @User_ID", new { user_ID }).ToList();
+            return connection.Query<QrCode>("SELECT * FROM netgarson.dbo.[QrCode] WHERE User_ID = @user_ID", new { user_ID }).ToList();
         }
 
         public void DELETEQrCode_WHEREID(int ID)
@@ -271,7 +271,7 @@ namespace netgarson.Models
 
         public QrCode SELECTQrCode_WHERETableNo(int tableNo, int user_ID)//
         {
-            return connection.Query<QrCode>("SELECT * FROM netgarson.dbo.[QrCode] WHERE TableNo = @TableNo AND User_ID = @User_ID", new { tableNo, user_ID }).FirstOrDefault();
+            return connection.Query<QrCode>("SELECT * FROM netgarson.dbo.[QrCode] WHERE TableNo = @TableNo AND User_ID = @user_ID", new { tableNo, user_ID }).FirstOrDefault();
         }
 
         #endregion
@@ -280,17 +280,17 @@ namespace netgarson.Models
 
         public int COUNTCall(int user_ID)
         {
-            return connection.Query<int>("SELECT COUNT(*) FROM netgarson.dbo.[Call] WHERE User_ID = @User_ID", new { user_ID }).FirstOrDefault();
+            return connection.Query<int>("SELECT COUNT(*) FROM netgarson.dbo.[Call] WHERE User_ID = @user_ID", new { user_ID }).FirstOrDefault();
         }
 
         public int COUNTCall_WHEREIsNew(int user_ID, bool isNew)
         {
-            return connection.Query<int>("SELECT COUNT(*) FROM netgarson.dbo.[Call] WHERE User_ID = @User_ID AND IsNew = @IsNew", new { user_ID, isNew }).FirstOrDefault();
+            return connection.Query<int>("SELECT COUNT(*) FROM netgarson.dbo.[Call] WHERE User_ID = @user_ID AND IsNew = @isNew", new { user_ID, isNew }).FirstOrDefault();
         }
 
         public List<Call> SELECTCall(int user_ID)
         {
-            return connection.Query<Call>("SELECT * FROM netgarson.dbo.[Call] WHERE User_ID = @User_ID", new { user_ID }).ToList();
+            return connection.Query<Call>("SELECT * FROM netgarson.dbo.[Call] WHERE User_ID = @user_ID", new { user_ID }).ToList();
         }
 
         public Call SELECTCall_WHEREID(int ID)//
@@ -305,7 +305,7 @@ namespace netgarson.Models
 
         public List<Call> SELECTCall_WHEREIsNew_ORDERBYRecordDate(int user_ID, bool isNew)
         {
-            return connection.Query<Call>("SELECT * FROM netgarson.dbo.[Call] WHERE User_ID = @User_ID AND IsNew = @IsNew ORDER BY RecordDate DESC", new { user_ID, isNew }).ToList();
+            return connection.Query<Call>("SELECT * FROM netgarson.dbo.[Call] WHERE User_ID = @user_ID AND IsNew = @isNew ORDER BY RecordDate DESC", new { user_ID, isNew }).ToList();
         }
 
         #endregion
@@ -314,17 +314,17 @@ namespace netgarson.Models
 
         public int COUNTScan(int user_ID)
         {
-            return connection.Query<int>("SELECT COUNT(*) FROM netgarson.dbo.[Scan] WHERE User_ID = @User_ID", new { user_ID }).FirstOrDefault();
+            return connection.Query<int>("SELECT COUNT(*) FROM netgarson.dbo.[Scan] WHERE User_ID = @user_ID", new { user_ID }).FirstOrDefault();
         }
 
         public int COUNTScan_WHEREIsNew(int user_ID, bool isNew)
         {
-            return connection.Query<int>("SELECT COUNT(*) FROM netgarson.dbo.[Scan] WHERE User_ID = @User_ID AND IsNew = @IsNew", new { user_ID, isNew }).FirstOrDefault();
+            return connection.Query<int>("SELECT COUNT(*) FROM netgarson.dbo.[Scan] WHERE User_ID = @user_ID AND IsNew = @isNew", new { user_ID, isNew }).FirstOrDefault();
         }
 
         public List<Scan> SELECTScan(int user_ID)
         {
-            return connection.Query<Scan>("SELECT * FROM netgarson.dbo.[Scan] WHERE User_ID = @User_ID", new { user_ID }).ToList();
+            return connection.Query<Scan>("SELECT * FROM netgarson.dbo.[Scan] WHERE User_ID = @user_ID", new { user_ID }).ToList();
         }
 
         public Scan SELECTScan_WHEREID(int ID)//
@@ -339,7 +339,7 @@ namespace netgarson.Models
 
         public List<Scan> SELECTScan_WHEREIsNew_ORDERBYRecordDate(int user_ID, bool isNew)
         {
-            return connection.Query<Scan>("SELECT * FROM netgarson.dbo.[Scan] WHERE User_ID = @User_ID AND IsNew = @IsNew ORDER BY RecordDate DESC", new { user_ID, isNew }).ToList();
+            return connection.Query<Scan>("SELECT * FROM netgarson.dbo.[Scan] WHERE User_ID = @user_ID AND IsNew = @isNew ORDER BY RecordDate DESC", new { user_ID, isNew }).ToList();
         }
 
         #endregion
@@ -348,7 +348,7 @@ namespace netgarson.Models
 
         public Set SELECTSet(int user_ID)//
         {
-            return connection.Query<Set>("SELECT * FROM netgarson.dbo.[Set] WHERE User_ID = @User_ID", new { user_ID }).FirstOrDefault();
+            return connection.Query<Set>("SELECT * FROM netgarson.dbo.[Set] WHERE User_ID = @user_ID", new { user_ID }).FirstOrDefault();
         }
 
         #endregion

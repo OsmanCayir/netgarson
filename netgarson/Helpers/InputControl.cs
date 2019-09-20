@@ -1426,7 +1426,7 @@ namespace netgarson.Helpers
                 }
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 model.Close();
                 errorCode = 99;

@@ -37,10 +37,11 @@
         success: function (data) {
             if (data.result == 100) {
                 var html = "";
-                for (var i = 0; i < data.yearList.count; i++) {
+                for (var i = 0; i < data.yearList.length; i++) {
                     html += "<option>" + data.yearList[i].Value + "</option>";
                 }
                 $(".select-year").html(html);
+                initCustomSelect("div-customSelectYear");
             }
             else if (data.result == 200) {
                 toastr.error("Veritabanı boş tablo hatası.", "Hata Kodu: 200.");
@@ -70,10 +71,11 @@
         success: function (data) {
             if (data.result == 100) {
                 var html = "";
-                for (var i = 0; i < data.yearDecadeList.count; i++) {
-                    html += "<option>" + data.yearDecadeList[i].BeginValue - data.yearDecadeList[i].EndValue + "</option>";
+                for (var i = 0; i < data.yearDecadeList.length; i++) {
+                    html += "<option>" + data.yearDecadeList[i].BeginValue + " - " + data.yearDecadeList[i].EndValue + "</option>";
                 }
                 $(".select-yearDecade").html(html);
+                initCustomSelect("div-customSelectYearDecade");
             }
             else if (data.result == 200) {
                 toastr.error("Veritabanı boş tablo hatası.", "Hata Kodu: 200.");
@@ -102,66 +104,66 @@
         data: JSON.stringify({}),
         success: function (data) {
             if (data.result == 100) {
-                if (data.chartCookieList[0] == "daily") {
+                if (data.chartValueList[0] == "daily") {
 
                     $(".a-scanChartDaily").addClass("active");
                     $(".a-scanChartMonthly").removeClass("active");
                     $(".a-scanChartYearly").removeClass("active");
 
-                    $("#div-scanMonthSelect").show();
-                    $("#div-scanYearSelect").show();
-                    $("#div-scanYearDecadeSelect").hide();
+                    //$("#div-scanMonthSelect").show();
+                    //$("#div-scanYearSelect").show();
+                    //$("#div-scanYearDecadeSelect").hide();
                 }
-                else if (data.chartCookieList[0] == "monthly") {
+                else if (data.chartValueList[0] == "monthly") {
 
                     $(".a-scanChartDaily").removeClass("active");
                     $(".a-scanChartMonthly").addClass("active");
                     $(".a-scanChartYearly").removeClass("active");
 
-                    $("#div-scanMonthSelect").hide();
-                    $("#div-scanYearSelect").show();
-                    $("#div-scanYearDecadeSelect").hide();
+                    //$("#div-scanMonthSelect").hide();
+                    //$("#div-scanYearSelect").show();
+                    //$("#div-scanYearDecadeSelect").hide();
                 }
-                else if (data.chartCookieList[0] == "yearly") {
+                else if (data.chartValueList[0] == "yearly") {
 
                     $(".a-scanChartDaily").removeClass("active");
                     $(".a-scanChartMonthly").removeClass("active");
                     $(".a-scanChartYearly").addClass("active");
 
-                    $("#div-scanMonthSelect").hide();
-                    $("#div-scanYearSelect").hide();
-                    $("#div-scanYearDecadeSelect").show();
+                    //$("#div-scanMonthSelect").hide();
+                    //$("#div-scanYearSelect").hide();
+                    //$("#div-scanYearDecadeSelect").show();
                 }
 
-                if (data.chartCookieList[3] == "daily") {
+                if (data.chartValueList[3] == "daily") {
 
                     $(".a-callChartDaily").addClass("active");
                     $(".a-callChartMonthly").removeClass("active");
                     $(".a-callChartYearly").removeClass("active");
 
-                    $("#div-callMonthSelect").show();
-                    $("#div-callYearSelect").show();
-                    $("#div-callYearDecadeSelect").hide();
+                    //$("#div-callMonthSelect").show();
+                    //$("#div-callYearSelect").show();
+                    //$("#div-callYearDecadeSelect").hide();
                 }
-                else if (data.chartCookieList[3] == "monthly") {
+                else if (data.chartValueList[3] == "monthly") {
 
                     $(".a-callChartDaily").removeClass("active");
                     $(".a-callChartMonthly").addClass("active");
                     $(".a-callChartYearly").removeClass("active");
 
-                    $("#div-callMonthSelect").hide();
-                    $("#div-callYearSelect").show();
-                    $("#div-callYearDecadeSelect").hide();
+                    //$("#div-callMonthSelect").hide();
+                    //$("#div-callYearSelect").show();
+                    //$("#div-callYearDecadeSelect").hide();
                 }
-                else if (data.chartCookieList[3] == "yearly") {
+                else if (data.chartValueList[3] == "yearly") {
 
                     $(".a-callChartDaily").removeClass("active");
                     $(".a-callChartMonthly").removeClass("active");
                     $(".a-callChartYearly").addClass("active");
 
-                    $("#div-callMonthSelect").hide();
-                    $("#div-callYearSelect").hide();
-                    $("#div-callYearDecadeSelect").show();
+                    //$("#div-callMonthSelect").hide();
+                    //$("#div-callYearSelect").hide();
+                    //$("#div-callYearDecadeSelect").show();
                 }
             }
             else if (data.result == 99) {
